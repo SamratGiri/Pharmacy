@@ -25,6 +25,22 @@ class AppWidget {
     );
   }
 
+  static TextStyle fredokabold(double size) {
+    return TextStyle(
+      fontFamily: 'Fredoka-Bold',
+      fontSize: size,
+      color: Colors.black,
+    );
+  }
+
+  static TextStyle fredokalight(double size) {
+    return TextStyle(
+      fontFamily: 'Fredoka-Light',
+      fontSize: size,
+      color: Colors.black,
+    );
+  }
+
   static Widget selectedCategory(String name) {
     return Material(
       elevation: 2,
