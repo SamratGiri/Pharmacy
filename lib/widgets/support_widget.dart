@@ -17,6 +17,14 @@ class AppWidget {
     );
   }
 
+  static TextStyle whiteLineText(double size) {
+    return TextStyle(
+      fontFamily: 'Poppins',
+      fontSize: size,
+      color: const Color.fromARGB(255, 103, 97, 97),
+    );
+  }
+
   static Widget selectedCategory(String name) {
     return Material(
       elevation: 2,

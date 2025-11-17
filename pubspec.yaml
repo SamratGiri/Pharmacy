@@ -61,6 +61,10 @@ flutter:
         - assets/images/picture.jpg
         - assets/images/medicine.jpg
         - assets/images/another_onoe.png
+        - assets/images/transparent.jpg
+        - assets/images/trans.png
+
+        - assets/images/medicine1.jpg
 
     # An image asset can refer to one or more resolution-specific "variants", see
     # https://flutter.dev/to/resolution-aware-images
