@@ -16,4 +16,29 @@ class AppWidget {
       color: Colors.black,
     );
   }
+
+  static Widget selectedCategory(String name) {
+    return Material(
+      elevation: 2,
+      borderRadius: BorderRadius.circular(30),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 30),
+        height: 50,
+        decoration: BoxDecoration(
+          color: const Color.fromARGB(255, 100, 78, 146),
+          borderRadius: BorderRadius.circular(30),
+        ),
+        child: Center(
+          child: Text(
+            name,
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'Poppins-Regular',
+              fontSize: 18.0,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }

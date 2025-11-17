@@ -9,12 +9,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool allmedicines = true,
+      suppliment = false,
+      herbal = false,
+      vitamins = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 93, 97, 211),
+      backgroundColor: Color.fromARGB(255, 228, 207, 130),
       body: Container(
-        margin: EdgeInsets.only(left: 30, top: 60),
+        margin: EdgeInsets.only(left: 20, top: 60),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -30,7 +34,7 @@ class _HomePageState extends State<HomePage> {
             SizedBox(height: 10),
             Text("Your Trusted", style: AppWidget.boldLineText(22.0)),
             Text("Online Pharmacy", style: AppWidget.lightLineText(22.0)),
-            SizedBox(height: 30),
+            SizedBox(height: 40),
 
             Padding(
               padding: const EdgeInsets.only(right: 20.0),
@@ -52,7 +56,6 @@ class _HomePageState extends State<HomePage> {
                           border: InputBorder.none,
                           hintText: "Search Message",
                           hintStyle: AppWidget.lightLineText(15.0),
-
                           suffixIcon: Container(
                             margin: EdgeInsets.all(5),
                             child: Icon(
@@ -64,6 +67,118 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 30),
+            Container(
+              height: 50,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  allmedicines
+                      ? AppWidget.selectedCategory("All medicines")
+                      : GestureDetector(
+                          onTap: () {
+                            allmedicines = true;
+                            herbal = false;
+                            suppliment = false;
+                            vitamins = false;
+                            setState(() {});
+                          },
+
+                          child: Center(
+                            child: Text(
+                              "All medicines",
+                              style: AppWidget.lightLineText(18.0),
+                            ),
+                          ),
+                        ),
+                  SizedBox(width: 30),
+                  herbal
+                      ? AppWidget.selectedCategory("Herbal")
+                      : GestureDetector(
+                          onTap: () {
+                            allmedicines = false;
+                            herbal = true;
+                            suppliment = false;
+                            vitamins = false;
+                            setState(() {});
+                          },
+
+                          child: Center(
+                            child: Text(
+                              "Herbal",
+                              style: AppWidget.lightLineText(18.0),
+                            ),
+                          ),
+                        ),
+                  SizedBox(width: 30),
+
+                  suppliment
+                      ? AppWidget.selectedCategory("Suppliments")
+                      : GestureDetector(
+                          onTap: () {
+                            allmedicines = false;
+                            herbal = false;
+                            suppliment = true;
+                            vitamins = false;
+                            setState(() {});
+                          },
+
+                          child: Center(
+                            child: Text(
+                              "Suppliments",
+
+                              style: AppWidget.lightLineText(18.0),
+                            ),
+                          ),
+                        ),
+                  SizedBox(width: 30),
+
+                  vitamins
+                      ? AppWidget.selectedCategory("Vitamins")
+                      : GestureDetector(
+                          onTap: () {
+                            allmedicines = false;
+                            herbal = false;
+                            suppliment = false;
+                            vitamins = true;
+                            setState(() {});
+                          },
+
+                          child: Center(
+                            child: Text(
+                              "Vitamins",
+
+                              style: AppWidget.lightLineText(18.0),
+                            ),
+                          ),
+                        ),
+                ],
+              ),
+            ),
+            SizedBox(height: 20),
+            Container(
+              margin: EdgeInsets.only(right: 20),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color(0xFFFFE29F),
+                    Color(0xFFFFD47F),
+                    Color(0xFFFFC85C),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomLeft,
+                ),
+              ),
+              child: Stack(
+                children: [
+                  Image.asset(
+                    "assets/images/another_onoe.png",
+                    height: 300,
+                    fit: BoxFit.cover,
                   ),
                 ],
               ),
