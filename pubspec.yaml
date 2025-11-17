@@ -61,8 +61,7 @@ flutter:
         - assets/images/picture.jpg
         - assets/images/medicine.jpg
         - assets/images/another_onoe.png
-        - assets/images/transparent.jpg
-        - assets/images/trans.png
+        - assets/images/Cough.png
 
         - assets/images/medicine1.jpg
 
@@ -84,6 +83,22 @@ flutter:
         - family: Poppins-Regular
           fonts:
               - asset: fonts/Poppins-Regular.ttf
+
+        - family: Fredoka-Bold
+          fonts:
+              - asset: fonts/Fredoka-Bold.ttf
+
+        - family: Fredoka-Light
+          fonts:
+              - asset: fonts/Fredoka-Light.ttf
+        #   - f
+        - family: Fredoka-SemiBold
+          fonts:
+              - asset: fonts/Fredoka-SemiBold.ttf
+
+        - family: Fredoka-Medium
+          fonts:
+              - asset: fonts/Fredoka-Medium.ttf
 
     #   - family: Trajan Pro
     #     fonts:

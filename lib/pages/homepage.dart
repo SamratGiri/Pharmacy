@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
                         child: TextField(
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: "Search Message",
+                            hintText: "Search Medicine ",
                             hintStyle: AppWidget.lightLineText(15.0),
                             suffixIcon: Container(
                               margin: EdgeInsets.all(5),

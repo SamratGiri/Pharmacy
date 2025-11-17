@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pharmacy/pages/detail_page.dart';
 import 'package:pharmacy/pages/homepage.dart';
+import 'package:pharmacy/pages/loginpage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'Pharmacy',
       debugShowCheckedModeBanner: false,
 
-      home: HomePage(),
+      home: LoginPage(),
     );
   }
 }

@@ -21,7 +21,7 @@ class AppWidget {
     return TextStyle(
       fontFamily: 'Poppins',
       fontSize: size,
-      color: const Color.fromARGB(255, 103, 97, 97),
+      color: const Color.fromARGB(255, 18, 17, 17),
     );
   }
 
