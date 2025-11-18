@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pharmacy/pages/detail_page.dart';
 import 'package:pharmacy/pages/homepage.dart';
 import 'package:pharmacy/pages/loginpage.dart';
+import 'package:pharmacy/pages/signup.dart';
 
 void main() {
   runApp(const MyApp());

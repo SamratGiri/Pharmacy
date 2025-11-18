@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:pharmacy/pages/homepage.dart';
-import 'package:pharmacy/pages/signup.dart';
+import 'package:pharmacy/pages/loginpage.dart';
 import 'package:pharmacy/widgets/support_widget.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class SignUp extends StatefulWidget {
+  const SignUp({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<SignUp> createState() => _SignUpState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +18,7 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height / 2.5,
+              height: MediaQuery.of(context).size.height / 2.3,
               decoration: BoxDecoration(
                 color: Colors.amberAccent,
                 borderRadius: BorderRadius.only(
@@ -43,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
                 top: MediaQuery.of(context).size.height / 4,
                 left: 20.0,
                 right: 20.0,
-                bottom: MediaQuery.of(context).size.height / 4,
+                bottom: 50,
               ),
               decoration: BoxDecoration(
                 color: Color.fromARGB(255, 240, 247, 234),
@@ -55,12 +54,34 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(height: 20),
                   Center(
                     child: Text(
-                      "Login Account",
-                      style: AppWidget.fredokabold(35),
+                      "Personal Information",
+                      style: AppWidget.fredokabold(30),
                     ),
                   ),
                   SizedBox(height: 20),
-                  Text("Email Address", style: AppWidget.fredokabold(25)),
+                  Text("Full Name ", style: AppWidget.fredokabold(20)),
+                  SizedBox(height: 10),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(60),
+                      border: Border.all(
+                        color: const Color.fromARGB(126, 0, 0, 0),
+                        width: 2,
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: "Your name",
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Text("Email Address", style: AppWidget.fredokabold(20)),
                   SizedBox(height: 10),
                   Container(
                     decoration: BoxDecoration(
@@ -82,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   SizedBox(height: 20),
-                  Text("Password", style: AppWidget.fredokabold(25)),
+                  Text("Password", style: AppWidget.fredokabold(20)),
                   SizedBox(height: 10),
                   Container(
                     decoration: BoxDecoration(
@@ -125,16 +146,18 @@ class _LoginPageState extends State<LoginPage> {
                       borderRadius: BorderRadius.circular(20),
                     ),
 
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => HomePage()),
-                        );
-                      },
-                      child: Center(
+                    child: Center(
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginPage(),
+                            ),
+                          );
+                        },
                         child: Text(
-                          "Login Account ",
+                          "Create Account ",
                           style: AppWidget.fredokabold(20),
                         ),
                       ),
@@ -142,18 +165,31 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   SizedBox(height: 15),
 
-                  Center(
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => SignUp()),
-                        );
-                      },
-                      child: Text(
-                        "Create New Account ?",
-                        style: AppWidget.fredokalight(18),
-                      ),
+                  Container(
+                    padding: EdgeInsets.only(left: 15),
+                    margin: EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(
+                      children: [
+                        Text(
+                          "Already have an account?",
+                          style: AppWidget.fredokalight(18),
+                        ),
+                        SizedBox(width: 5),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LoginPage(),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            "SignUp?",
+                            style: AppWidget.fredokabold(18),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
