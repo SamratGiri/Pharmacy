@@ -1,58 +1,17 @@
-import 'dart:math';
-
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:pharmacy/pages/homepage.dart';
-import 'package:pharmacy/pages/signup.dart';
 import 'package:pharmacy/widgets/support_widget.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class AdminLogin extends StatefulWidget {
+  const AdminLogin({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<AdminLogin> createState() => _AdminLoginState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  TextEditingController emailController = TextEditingController();
+class _AdminLoginState extends State<AdminLogin> {
+  TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
-  String? name, email, password;
-
-  userLogin() async {
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email!,
-        password: password!,
-      );
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomePage()),
-      );
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            backgroundColor: Colors.red,
-            content: Text(
-              "No user found for the email ",
-              style: AppWidget.whiteLineText(18),
-            ),
-          ),
-        );
-      } else if (e.code == 'wrong-password') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            backgroundColor: Colors.red,
-            content: Text(
-              "Wrong password provided by the user ",
-              style: AppWidget.whiteLineText(18),
-            ),
-          ),
-        );
-      }
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,12 +57,12 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(height: 20),
                   Center(
                     child: Text(
-                      "Login Account",
+                      "Admin Account",
                       style: AppWidget.fredokabold(35),
                     ),
                   ),
                   SizedBox(height: 20),
-                  Text("Email Address", style: AppWidget.fredokabold(25)),
+                  Text("Username", style: AppWidget.fredokabold(25)),
                   SizedBox(height: 10),
                   Container(
                     decoration: BoxDecoration(
@@ -117,10 +76,9 @@ class _LoginPageState extends State<LoginPage> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20),
                       child: TextField(
-                        controller: emailController,
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: "Email address",
+                          hintText: "Username",
                         ),
                       ),
                     ),
@@ -140,7 +98,6 @@ class _LoginPageState extends State<LoginPage> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20),
                       child: TextField(
-                        controller: passwordController,
                         obscureText: true,
                         decoration: InputDecoration(
                           border: InputBorder.none,
@@ -150,16 +107,6 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   SizedBox(height: 5.5),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        "Forget Password ?",
-                        style: AppWidget.fredokalight(18),
-                      ),
-                    ],
-                  ),
 
                   SizedBox(height: 40),
 
@@ -171,42 +118,15 @@ class _LoginPageState extends State<LoginPage> {
                       borderRadius: BorderRadius.circular(20),
                     ),
 
-                    child: GestureDetector(
-                      onTap: () {
-                        if (emailController.text != "" &&
-                            passwordController.text != "") {
-                          setState(() {
-                            email = emailController.text;
-                            password = passwordController.text;
-                          });
-                        }
-                        userLogin();
-                      },
-
-                      child: Center(
-                        child: Text(
-                          "Login Account ",
-                          style: AppWidget.fredokabold(20),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 15),
-
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => SignUp()),
-                      );
-                    },
                     child: Center(
                       child: Text(
-                        "Create New Account ?",
-                        style: AppWidget.fredokalight(18),
+                        "Login Account ",
+                        style: AppWidget.fredokabold(20),
                       ),
                     ),
                   ),
+
+                  SizedBox(height: 15),
                 ],
               ),
             ),
@@ -214,5 +134,36 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  loginAdmin() {
+    FirebaseFirestore.instance.collection("Admin").get().then((snapshot) {
+      snapshot.docs.forEach((result) {
+        if (result.data()['id'] != usernameController.text.trim()) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: Colors.red,
+              content: Text(
+                "Wrong  username ",
+                style: AppWidget.whiteLineText(18),
+              ),
+            ),
+          );
+        } else if (result.data()['id'] != passwordController.text.trim()) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: Colors.red,
+              content: Text(
+                "Wrong  password ",
+                style: AppWidget.whiteLineText(18),
+              ),
+            ),
+          );
+        }
+        else{
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>))
+        }
+      });
+    });
   }
 }

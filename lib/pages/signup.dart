@@ -1,6 +1,13 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pharmacy/pages/homepage.dart';
 import 'package:pharmacy/pages/loginpage.dart';
+import 'package:pharmacy/services/database.dart';
+import 'package:pharmacy/services/shared_pref.dart';
 import 'package:pharmacy/widgets/support_widget.dart';
+import 'package:random_string/random_string.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -10,6 +17,72 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  String? name, email, password;
+  bool loading = false;
+
+  registration() async {
+    setState(() {
+      loading = true;
+    });
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email!, password: password!);
+
+      String id = randomAlphaNumeric(10);
+      Map<String, dynamic> userInfoMap = {
+        "Name": nameController.text,
+        "Email": emailController.text,
+        "Id": id,
+      };
+      await SharedPreferenceHelper().saveUserId(id);
+      await SharedPreferenceHelper().saveUserEmail(email!);
+      await SharedPreferenceHelper().saveUserName(name!);
+      await DatabaseMethod().addUserInfo(userInfoMap, id);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.green,
+          content: Text(
+            "Registration Sucessful",
+            style: AppWidget.whiteLineText(18),
+          ),
+        ),
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.red,
+            content: Text(
+              "Password is too weak",
+              style: AppWidget.whiteLineText(18),
+            ),
+          ),
+        );
+      } else if (e.code == 'email-already-in-use') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.red,
+            content: Text(
+              "Account already exists",
+              style: AppWidget.whiteLineText(18),
+            ),
+          ),
+        );
+      }
+      return e.message;
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,6 +146,7 @@ class _SignUpState extends State<SignUp> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20),
                       child: TextField(
+                        controller: nameController,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: "Your name",
@@ -95,6 +169,8 @@ class _SignUpState extends State<SignUp> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20),
                       child: TextField(
+                        controller: emailController,
+
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: "Email address",
@@ -117,6 +193,9 @@ class _SignUpState extends State<SignUp> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20),
                       child: TextField(
+                        obscureText: true,
+                        controller: passwordController,
+
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: "Password ",
@@ -149,17 +228,27 @@ class _SignUpState extends State<SignUp> {
                     child: Center(
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => LoginPage(),
-                            ),
-                          );
+                          if (nameController.text != "" &&
+                              emailController.text != "" &&
+                              passwordController.text != "") {
+                            setState(() {
+                              name = nameController.text;
+                              email = emailController.text;
+                              password = passwordController.text;
+                            });
+                            registration();
+                          }
                         },
-                        child: Text(
-                          "Create Account ",
-                          style: AppWidget.fredokabold(20),
-                        ),
+                        child: loading
+                            ? Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.black,
+                                ),
+                              )
+                            : Text(
+                                "Create Account ",
+                                style: AppWidget.fredokabold(20),
+                              ),
                       ),
                     ),
                   ),
