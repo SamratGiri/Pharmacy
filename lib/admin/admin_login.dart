@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:pharmacy/admin/add_product.dart';
 import 'package:pharmacy/widgets/support_widget.dart';
 
 class AdminLogin extends StatefulWidget {
@@ -12,6 +13,8 @@ class AdminLogin extends StatefulWidget {
 class _AdminLoginState extends State<AdminLogin> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +79,7 @@ class _AdminLoginState extends State<AdminLogin> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20),
                       child: TextField(
+                        controller: usernameController,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: "Username",
@@ -98,6 +102,7 @@ class _AdminLoginState extends State<AdminLogin> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20),
                       child: TextField(
+                        controller: passwordController,
                         obscureText: true,
                         decoration: InputDecoration(
                           border: InputBorder.none,
@@ -110,18 +115,31 @@ class _AdminLoginState extends State<AdminLogin> {
 
                   SizedBox(height: 40),
 
-                  Container(
-                    height: 50,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      color: Colors.amberAccent,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
+                  GestureDetector(
+                    onTap: () {
+                      if (usernameController.text != "" &&
+                          passwordController.text != "") {
+                        setState(() {
+                          isLoading = true;
+                        });
+                        loginAdmin();
+                      }
+                    },
+                    child: Container(
+                      height: 50,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        color: Colors.amberAccent,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
 
-                    child: Center(
-                      child: Text(
-                        "Login Account ",
-                        style: AppWidget.fredokabold(20),
+                      child: Center(
+                        child: isLoading
+                            ? CircularProgressIndicator(color: Colors.white)
+                            : Text(
+                                "Login Account ",
+                                style: AppWidget.fredokabold(20),
+                              ),
                       ),
                     ),
                   ),
@@ -136,7 +154,7 @@ class _AdminLoginState extends State<AdminLogin> {
     );
   }
 
-  loginAdmin() {
+  void loginAdmin() {
     FirebaseFirestore.instance.collection("Admin").get().then((snapshot) {
       snapshot.docs.forEach((result) {
         if (result.data()['id'] != usernameController.text.trim()) {
@@ -149,7 +167,8 @@ class _AdminLoginState extends State<AdminLogin> {
               ),
             ),
           );
-        } else if (result.data()['id'] != passwordController.text.trim()) {
+        } else if (result.data()['password'] !=
+            passwordController.text.trim()) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               backgroundColor: Colors.red,
@@ -159,9 +178,11 @@ class _AdminLoginState extends State<AdminLogin> {
               ),
             ),
           );
-        }
-        else{
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>))
+        } else {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddProduct()),
+          );
         }
       });
     });

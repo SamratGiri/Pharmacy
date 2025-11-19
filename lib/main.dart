@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:pharmacy/admin/add_product.dart';
 import 'package:pharmacy/admin/admin_login.dart';
+import 'package:pharmacy/pages/bottom_nav.dart';
 import 'package:pharmacy/pages/detail_page.dart';
 import 'package:pharmacy/pages/homepage.dart';
 import 'package:pharmacy/pages/loginpage.dart';
@@ -22,7 +24,7 @@ class MyApp extends StatelessWidget {
       title: 'Pharmacy',
       debugShowCheckedModeBanner: false,
 
-      home: AdminLogin(),
+      home: BottomNav(),
     );
   }
 }
