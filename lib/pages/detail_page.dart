@@ -2,14 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:pharmacy/pages/homepage.dart';
 import 'package:pharmacy/widgets/support_widget.dart';
 
+// ignore: must_be_immutable
 class DetailPage extends StatefulWidget {
-  const DetailPage({super.key});
+  String name, description, price;
+  DetailPage({
+    super.key,
+    required this.name,
+    required this.description,
+    required this.price,
+  });
 
   @override
   State<DetailPage> createState() => _DetailPageState();
 }
 
 class _DetailPageState extends State<DetailPage> {
+  int quantity = 1;
+  double basePrice = 0;
+  double totalPrice = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    basePrice = double.tryParse(widget.price) ?? 0;
+    totalPrice = basePrice;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,17 +87,17 @@ class _DetailPageState extends State<DetailPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Cough Syrup",
-                            style: AppWidget.whiteLineText(22.0),
+                            widget.name,
+                            style: AppWidget.whiteLineText(21.0),
                           ),
-                          SizedBox(width: 40),
+                          SizedBox(width: 5),
 
                           Container(
                             padding: EdgeInsets.symmetric(horizontal: 10),
                             decoration: BoxDecoration(
                               color: Color.fromARGB(255, 214, 206, 179),
                               border: Border.all(
-                                color: Colors.white,
+                                color: Colors.black,
                                 width: 1.5,
                               ),
                               borderRadius: BorderRadius.circular(30),
@@ -87,13 +105,35 @@ class _DetailPageState extends State<DetailPage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Icon(Icons.remove, color: Colors.black),
+                                GestureDetector(
+                                  onTap: () {
+                                    if (quantity > 1) {
+                                      setState(() {
+                                        quantity--;
+                                        totalPrice = basePrice * quantity;
+                                      });
+                                    }
+                                  },
+                                  child: Icon(
+                                    Icons.remove,
+                                    color: Colors.black,
+                                  ),
+                                ),
                                 SizedBox(width: 10),
-
-                                Text("1", style: AppWidget.boldLineText(20.0)),
+                                Text(
+                                  quantity.toString(),
+                                  style: AppWidget.boldLineText(20.0),
+                                ),
                                 SizedBox(width: 10),
-
-                                Icon(Icons.add, color: Colors.black),
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      quantity++;
+                                      totalPrice = basePrice * quantity;
+                                    });
+                                  },
+                                  child: Icon(Icons.add, color: Colors.black),
+                                ),
                               ],
                             ),
                           ),
@@ -106,10 +146,7 @@ class _DetailPageState extends State<DetailPage> {
                   Text("Description ", style: AppWidget.lightLineText(18.0)),
                   SizedBox(height: 10),
 
-                  Text(
-                    "Cold medicines are a group of medications taken individually or in combination as a treatment for the symptoms of the common cold and similar conditions of the upper respiratory tract. The term encompasses a broad array of drugs, including analgesics, antihistamines and decongestants, among many others. ",
-                    style: AppWidget.lightLineText(13),
-                  ),
+                  Text(widget.description, style: AppWidget.lightLineText(13)),
                   SizedBox(height: 20),
 
                   Container(
@@ -129,7 +166,10 @@ class _DetailPageState extends State<DetailPage> {
                               "Total Price",
                               style: AppWidget.lightLineText(22),
                             ),
-                            Text("\$100.00", style: AppWidget.boldLineText(21)),
+                            Text(
+                              "\$${totalPrice.toStringAsFixed(2)}",
+                              style: AppWidget.boldLineText(21),
+                            ),
                           ],
                         ),
                         Container(

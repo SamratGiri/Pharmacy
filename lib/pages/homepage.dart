@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:pharmacy/pages/detail_page.dart';
 import 'package:pharmacy/services/database.dart';
 import 'package:pharmacy/widgets/support_widget.dart';
 
@@ -39,75 +40,90 @@ class _HomePageState extends State<HomePage> {
                 itemCount: snapshot.data.docs.length,
                 itemBuilder: (context, index) {
                   DocumentSnapshot ds = snapshot.data.docs[index];
-                  return Container(
-                    margin: EdgeInsets.only(right: 20, bottom: 20),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      gradient: LinearGradient(
-                        colors: [
-                          Color(0xFFFFE29F),
-                          Color(0xFFFFD47F),
-                          Color(0xFFFFC85C),
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomLeft,
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailPage(
+                            name: ds["Name"],
+                            description: ds["Description"],
+                            price: ds["Price"],
+                          ),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      margin: EdgeInsets.only(right: 20, bottom: 20),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        gradient: LinearGradient(
+                          colors: [
+                            Color(0xFFFFE29F),
+                            Color(0xFFFFD47F),
+                            Color(0xFFFFC85C),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomLeft,
+                        ),
                       ),
-                    ),
-                    child: Stack(
-                      children: [
-                        Center(
-                          child: Image.asset(
-                            "assets/images/another_onoe.png",
-                            height: 300,
-                            fit: BoxFit.cover,
+                      child: Stack(
+                        children: [
+                          Center(
+                            child: Image.asset(
+                              "assets/images/another_onoe.png",
+                              height: 300,
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 330,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Container(
-                                padding: EdgeInsets.all(10),
-                                margin: EdgeInsets.all(20),
-                                width: MediaQuery.of(context).size.width,
-                                decoration: BoxDecoration(
-                                  color: Color.fromARGB(255, 255, 225, 147),
-                                  border: Border.all(
-                                    color: Colors.white,
-                                    width: 1.6,
+                          SizedBox(
+                            height: 330,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.all(10),
+                                  margin: EdgeInsets.only(top: 15),
+                                  width: MediaQuery.of(context).size.width,
+                                  decoration: BoxDecoration(
+                                    color: Color.fromARGB(255, 255, 225, 147),
+                                    border: Border.all(
+                                      color: Colors.white,
+                                      width: 1.6,
+                                    ),
+                                    borderRadius: BorderRadius.circular(30),
                                   ),
-                                  borderRadius: BorderRadius.circular(30),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            ds["Name"],
+                                            style: AppWidget.fredokamedium(20),
+                                          ),
+                                          Text(
+                                            // ignore: prefer_interpolation_to_compose_strings
+                                            "\$" + ds["Price"],
+                                            style: AppWidget.fredokamedium(20),
+                                          ),
+                                        ],
+                                      ),
+                                      Text(
+                                        ds["CompanyName"],
+                                        style: AppWidget.fredokamedium(20),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          ds["Name"],
-                                          style: AppWidget.whiteLineText(20),
-                                        ),
-                                        Text(
-                                          // ignore: prefer_interpolation_to_compose_strings
-                                          "\$" + ds["Price"],
-                                          style: AppWidget.whiteLineText(20),
-                                        ),
-                                      ],
-                                    ),
-                                    Text(
-                                      ds["CompanyName "],
-                                      style: AppWidget.whiteLineText(20),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   );
                 },

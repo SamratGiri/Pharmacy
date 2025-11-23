@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pharmacy/pages/homepage.dart';
@@ -19,13 +17,14 @@ class _LoginPageState extends State<LoginPage> {
 
   String? name, email, password;
 
-  userLogin() async {
+  Future userLogin() async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email!,
         password: password!,
       );
       Navigator.pushReplacement(
+        // ignore: use_build_context_synchronously
         context,
         MaterialPageRoute(builder: (context) => HomePage()),
       );

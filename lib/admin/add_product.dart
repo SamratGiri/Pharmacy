@@ -209,7 +209,7 @@ class _AddProductState extends State<AddProduct> {
                           "Name": productname.text,
                           "Price": productprice.text,
                           "Category": selectedCategory,
-                          "CompanyName ": companyname.text,
+                          "CompanyName": companyname.text,
                           "Description": productdescription.text,
                         };
                         await DatabaseMethod().addProductInfo(addProduct);

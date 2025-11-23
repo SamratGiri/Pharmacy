@@ -6,7 +6,9 @@ import 'package:pharmacy/pages/bottom_nav.dart';
 import 'package:pharmacy/pages/detail_page.dart';
 import 'package:pharmacy/pages/homepage.dart';
 import 'package:pharmacy/pages/loginpage.dart';
+import 'package:pharmacy/pages/order_page.dart';
 import 'package:pharmacy/pages/signup.dart';
+import 'package:pharmacy/pages/wallet_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
