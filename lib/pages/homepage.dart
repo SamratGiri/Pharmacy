@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
   Stream? productStream;
 
   Future getontheload() async {
-    productStream = await DatabaseMethod().getallProducts("Medicines");
+    productStream = await DatabaseMethod().getallProduct();
     setState(() {});
   }
 
@@ -207,7 +207,7 @@ class _HomePageState extends State<HomePage> {
                             vitamins = false;
 
                             productStream = await DatabaseMethod()
-                                .getallProducts("Medicines");
+                                .getallProduct();
                             setState(() {});
                           },
 

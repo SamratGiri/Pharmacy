@@ -1,0 +1,2 @@
+String publishedKey = "";
+String secretKey = "";

@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:pharmacy/pages/bottom_nav.dart';
 import 'package:pharmacy/pages/homepage.dart';
+import 'package:pharmacy/services/database.dart';
 import 'package:pharmacy/widgets/support_widget.dart';
 
 // ignore: must_be_immutable
@@ -44,7 +47,7 @@ class _DetailPageState extends State<DetailPage> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => HomePage()),
+                        MaterialPageRoute(builder: (context) => BottomNav()),
                       );
                     },
                     child: Container(
@@ -172,21 +175,76 @@ class _DetailPageState extends State<DetailPage> {
                             ),
                           ],
                         ),
-                        Container(
-                          height: 50,
+                        GestureDetector(
+                          onTap: () async {
+                            Map<String, dynamic> orderData = {
+                              "name": widget.name,
+                              "quantity": quantity,
+                              "price": double.tryParse(widget.price) ?? 0,
 
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          width: 180,
-                          child: Center(
-                            child: Text(
-                              "Order Now",
-                              style: TextStyle(
-                                fontFamily: "Poppins",
-                                color: Colors.white,
-                                fontSize: 20,
+                              "totalPrice":
+                                  quantity *
+                                  (double.tryParse(widget.price) ?? 0),
+                              "timestamp": FieldValue.serverTimestamp(),
+                            };
+                            await DatabaseMethod().addOrder(orderData);
+                            showDialog(
+                              context: context,
+                              barrierDismissible: true,
+                              builder: (context) {
+                                return AlertDialog(
+                                  insetPadding: EdgeInsets.symmetric(
+                                    horizontal: 30,
+                                    vertical: 300,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  backgroundColor: const Color.fromARGB(
+                                    255,
+                                    228,
+                                    207,
+                                    130,
+                                  ),
+                                  title: Text(
+                                    "Order Placed",
+                                    style: AppWidget.boldLineText(22),
+                                  ),
+                                  content: Text(
+                                    "Your order has been placed successfully!",
+                                    style: AppWidget.lightLineText(18),
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text(
+                                        "OK",
+                                        style: AppWidget.boldLineText(18),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          child: Container(
+                            height: 50,
+
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            width: 180,
+                            child: Center(
+                              child: Text(
+                                "Order Now",
+                                style: TextStyle(
+                                  fontFamily: "Poppins",
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                ),
                               ),
                             ),
                           ),

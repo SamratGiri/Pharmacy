@@ -20,4 +20,26 @@ class DatabaseMethod {
         .where("Category", isEqualTo: category)
         .snapshots();
   }
+
+  Future<Stream<QuerySnapshot>> getallProduct() async {
+    return await FirebaseFirestore.instance
+        .collection("products")
+        .where(
+          "Category",
+          whereIn: ['Medicines', 'Herbal', 'Vitamins', 'Suppliments'],
+        )
+        .snapshots();
+  }
+
+  // Add order to Firestore
+  Future addOrder(Map<String, dynamic> orderData) async {
+    return FirebaseFirestore.instance.collection("orders").add(orderData);
+  }
+
+  Future<Stream<QuerySnapshot>> getallOrders() async {
+    return FirebaseFirestore.instance
+        .collection("orders")
+        .orderBy("timestamp", descending: true)
+        .snapshots();
+  }
 }

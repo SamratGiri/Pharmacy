@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:pharmacy/admin/add_product.dart';
 import 'package:pharmacy/admin/admin_login.dart';
 import 'package:pharmacy/pages/bottom_nav.dart';
@@ -9,10 +10,12 @@ import 'package:pharmacy/pages/loginpage.dart';
 import 'package:pharmacy/pages/order_page.dart';
 import 'package:pharmacy/pages/signup.dart';
 import 'package:pharmacy/pages/wallet_page.dart';
+import 'package:pharmacy/widgets/constant.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  Stripe.publishableKey = publishedKey;
   runApp(const MyApp());
 }
 
