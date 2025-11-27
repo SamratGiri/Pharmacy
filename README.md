@@ -38,8 +38,10 @@ This repository contains a Flutter client that uses Firestore to store data and 
 ## Images / App screenshots
 
 Include eight app UI screenshots for documentation and local testing. Recommended filenames and brief descriptions:
+![alt text](assets/images/home.png)
 
--   assets/images/home.png — Home screen (dashboard, featured products)
+— Home screen (dashboard, featured products)
+
 -   assets/images/orders.png — Orders / order list and details
 -   assets/images/wallet.png — Wallet / payments and balance
 -   assets/images/profile.png — User profile and settings
