@@ -14,7 +14,6 @@ A lightweight, mobile-first pharmacy management app built with Flutter and Fireb
 -   Running
 -   Admin page
 -   Testing
--   Deployment
 
 ## Summary
 
@@ -35,6 +34,26 @@ This repository contains a Flutter client that uses Firestore to store data and 
 -   Frontend: Flutter (Dart)
 -   Backend: Firebase Firestore (database), Firebase Authentication
 -   Optional: Firebase Cloud Functions (server logic), Firebase Storage (images)
+
+## Images / App screenshots
+
+Include eight app UI screenshots for documentation and local testing. Recommended filenames and brief descriptions:
+
+-   assets/images/home.png — Home screen (dashboard, featured products)
+-   assets/images/orders.png — Orders / order list and details
+-   assets/images/wallet.png — Wallet / payments and balance
+-   assets/images/profile.png — User profile and settings
+-   assets/images/signup.png — Signup / register screen
+-   assets/images/signin.png — Sign-in / authentication screen
+-   assets/images/add_product.png — Add product (admin) screen with photo slots
+-   assets/images/product_list.png — Product list / search and quick add
+
+Usage notes:
+
+-   Register these files in pubspec.yaml under flutter.assets.
+-   For production, upload to Firebase Storage (path: /products/{productId}/images/) and store URLs in product documents.
+-   Optimize images (max ~1024px width, prefer WebP/JPEG, target <500KB) and include thumbnails where appropriate.
+-   Keep filenames stable or map UUIDs in the product document to avoid collisions.
 
 ## Prerequisites
 
@@ -77,7 +96,18 @@ This repository contains a Flutter client that uses Firestore to store data and 
 
 -   Allow reads/writes based on user role.
 -   Only admin role can create/update products.
--   Log sensitive changes to audits collection.
+-   Log sensitive changes to audits collection (create an audit document on product create/update/delete with action, userId, timestamp, and details).
+-   Example: require request.auth != null and get(/databases/$(default)/documents/users/$(request.auth.uid)).data.role == 'admin' for product writes.
+
+## Images
+
+-   Use Firebase Storage for product images (recommended path: /products/{productId}/images/{filename}).
+-   Product images
+    -   Admin UI: show a grid of up to 8 empty slots labeled "Add photo" — tapping a slot opens camera/gallery to pick/upload an image.
+    -   Store uploaded images metadata in products/{productId}.images as an array of objects: { url, path, uploadedBy, uploadedAt }.
+-   Filename strategy: use stable names (image1..image8) or UUIDs to avoid collisions; keep mapping in the product document.
+-   Upload recommendations: resize to max 1024px width, prefer WebP/JPEG, target <500KB per image for mobile performance.
+-   Local testing: place images/assets as assets/images/img1.jpg ... img8.jpg and register them in pubspec.yaml; replace with Storage URLs when uploading to production.
     Example: require request.auth != null and get(/databases/$(default)/documents/users/$(request.auth.uid)).data.role == 'admin' for product writes.
 
 ## Admin page
