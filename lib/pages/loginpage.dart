@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:pharmacy/pages/bottom_nav.dart';
 import 'package:pharmacy/pages/homepage.dart';
 import 'package:pharmacy/pages/signup.dart';
 import 'package:pharmacy/widgets/support_widget.dart';
@@ -17,39 +19,72 @@ class _LoginPageState extends State<LoginPage> {
 
   String? name, email, password;
 
-  Future userLogin() async {
+  Future<void> userLogin() async {
+    final String emailText = emailController.text.trim();
+    final String passwordText = passwordController.text;
+
+    if (emailText.isEmpty || passwordText.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.red,
+          content: Text(
+            "Please enter email and password",
+            style: AppWidget.whiteLineText(18),
+          ),
+        ),
+      );
+      return;
+    }
+
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email!,
-        password: password!,
+        email: emailText,
+        password: passwordText,
       );
-      Navigator.pushReplacement(
-        // ignore: use_build_context_synchronously
-        context,
-        MaterialPageRoute(builder: (context) => HomePage()),
-      );
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
+
+      // Ensure user exists in Firestore (collection assumed to be 'users' and field 'Email')
+      final snapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .where('Email', isEqualTo: emailText)
+          .get();
+
+      if (snapshot.docs.isEmpty) {
+        // If no Firestore record, sign out and inform the user
+        await FirebaseAuth.instance.signOut();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             backgroundColor: Colors.red,
             content: Text(
-              "No user found for the email ",
+              "User doesn't exist",
               style: AppWidget.whiteLineText(18),
             ),
           ),
         );
-      } else if (e.code == 'wrong-password') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            backgroundColor: Colors.red,
-            content: Text(
-              "Wrong password provided by the user ",
-              style: AppWidget.whiteLineText(18),
-            ),
-          ),
-        );
+        return;
       }
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => BottomNav()),
+      );
+    } on FirebaseAuthException catch (_) {
+      // For wrong email/password or user-not-found show the same message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.red,
+          content: Text(
+            "User doesn't exist",
+            style: AppWidget.whiteLineText(18),
+          ),
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.red,
+          content: Text(e.toString(), style: AppWidget.whiteLineText(18)),
+        ),
+      );
     }
   }
 

@@ -15,7 +15,7 @@ class _AddProductState extends State<AddProduct> {
   TextEditingController productprice = TextEditingController();
   TextEditingController productdescription = TextEditingController();
 
-  List<String> categories = ["Herbal", "Vitamins", "Medicines", "Supplements"];
+  List<String> categories = ["Herbal", "Vitamins", "Medicines", "Suppliment"];
   String? selectedCategory;
   bool isLoading = false;
   @override

@@ -2,9 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:pharmacy/admin/add_product.dart';
-import 'package:pharmacy/admin/admin_login.dart';
 import 'package:pharmacy/pages/bottom_nav.dart';
-import 'package:pharmacy/pages/detail_page.dart';
+
 import 'package:pharmacy/pages/homepage.dart';
 import 'package:pharmacy/pages/loginpage.dart';
 import 'package:pharmacy/pages/order_page.dart';
@@ -22,14 +21,13 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Pharmacy',
       debugShowCheckedModeBanner: false,
 
-      home: BottomNav(),
+      home: AddProduct(),
     );
   }
 }

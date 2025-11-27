@@ -1,8 +1,23 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pharmacy/pages/signup.dart';
 import 'package:pharmacy/widgets/support_widget.dart';
 
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+class ProfilePage extends StatefulWidget {
+  ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  User? user;
+
+  @override
+  void initState() {
+    super.initState();
+    user = FirebaseAuth.instance.currentUser;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +48,11 @@ class ProfilePage extends StatelessWidget {
             ),
             const SizedBox(height: 25),
 
-            Text('Samrat Giri', style: AppWidget.fredokabold(25)),
-            Text('samrat@example.com', style: AppWidget.fredokalight(17)),
+            Text(
+              user?.displayName ?? "No name",
+              style: AppWidget.fredokabold(25),
+            ),
+            Text(user?.email ?? "No email", style: AppWidget.fredokalight(17)),
             const SizedBox(height: 20),
 
             _sectionTitle('Account Settings'),
@@ -59,7 +77,12 @@ class ProfilePage extends StatelessWidget {
             const SizedBox(height: 40),
 
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignUp()),
+                );
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.redAccent,
                 minimumSize: const Size(double.infinity, 50),

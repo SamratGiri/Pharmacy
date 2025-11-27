@@ -26,7 +26,7 @@ class DatabaseMethod {
         .collection("products")
         .where(
           "Category",
-          whereIn: ['Medicines', 'Herbal', 'Vitamins', 'Suppliments'],
+          whereIn: ['Medicines', 'Herbal', 'Vitamins', 'Suppliment'],
         )
         .snapshots();
   }

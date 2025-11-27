@@ -2,6 +2,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pharmacy/pages/bottom_nav.dart';
 import 'package:pharmacy/pages/homepage.dart';
 import 'package:pharmacy/pages/loginpage.dart';
 import 'package:pharmacy/services/database.dart';
@@ -32,6 +33,9 @@ class _SignUpState extends State<SignUp> {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email!, password: password!);
 
+      await userCredential.user!.updateDisplayName(nameController.text);
+      await userCredential.user!.reload();
+
       String id = randomAlphaNumeric(10);
       Map<String, dynamic> userInfoMap = {
         "Name": nameController.text,
@@ -44,7 +48,7 @@ class _SignUpState extends State<SignUp> {
       await DatabaseMethod().addUserInfo(userInfoMap, id);
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(builder: (context) => BottomNav()),
       );
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -66,6 +70,9 @@ class _SignUpState extends State<SignUp> {
             ),
           ),
         );
+        setState(() {
+          loading = false;
+        });
       } else if (e.code == 'email-already-in-use') {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -76,9 +83,15 @@ class _SignUpState extends State<SignUp> {
             ),
           ),
         );
+        setState(() {
+          loading = false;
+        });
       }
       return e.message;
     } catch (e) {
+      setState(() {
+        loading = false;
+      });
       return e.toString();
     }
   }
