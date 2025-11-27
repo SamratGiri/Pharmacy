@@ -21,13 +21,11 @@ This repository contains a Flutter client that uses Firestore to store data and 
 
 ## Features
 
--   Inventory management (stock levels, expirations, batch numbers)
--   Prescription intake and dispensing workflow
 -   Customer profiles and medical notes
 -   Sales/orders, receipts and returns
 -   Admin page to add/edit products
 -   Role-based access control (admin, pharmacist, assistant)
--   Basic analytics and audit logs (stored in Firestore)
+-
 
 ## Tech stack
 
@@ -37,31 +35,15 @@ This repository contains a Flutter client that uses Firestore to store data and 
 
 ## Images / App screenshots
 
-Include eight app UI screenshots for documentation and local testing. Recommended filenames and brief descriptions:
-<img src="assets/images/home.png" width="100" height=200 />
-
-— Home screen (dashboard, featured products)
-
-<img src="assets/images/orders.png" width="100" height=200 />
- — Orders order list and details
-
-<img src="assets/images/profile.png" width="100" height="200" />
-— User profile and settings
-
-<img src="assets/images/signup.png" width="100" height="200" />
-— Signup / register screen
-
-<img src="assets/images/signin.png" width="100" height="200" />
-— Sign-in / authentication screen
-
-<img src="assets/images/add_product.png" width="100" height="200" />
-— Add product (admin) screen with photo slots
-
-<img src="assets/images/product_list.png" width="100" height="200" />
-— Product list / search and quick add
-
-<img src="assets/images/wallet.png" width="100" height="200" />
-— Wallet / payments and balance
+<p>
+  <img src="assets/images/home.png" width="150" />
+  <img src="assets/images/order.png" width="150" />
+  <img src="assets/images/profile.png" width="150" />
+  <img src="assets/images/signup.png" width="150" />
+  <img src="assets/images/login1.png" width="150" />
+  <img src="assets/images/add_product.png" width="150" />
+  <img src="assets/images/wallet.png" width="150" />
+</p>
 
 Usage notes:
 
