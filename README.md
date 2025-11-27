@@ -38,17 +38,30 @@ This repository contains a Flutter client that uses Firestore to store data and 
 ## Images / App screenshots
 
 Include eight app UI screenshots for documentation and local testing. Recommended filenames and brief descriptions:
-![alt text](assets/images/home.png)
+<img src="assets/images/home.png" width="100" height=200 />
 
 — Home screen (dashboard, featured products)
 
--   assets/images/orders.png — Orders / order list and details
--   assets/images/wallet.png — Wallet / payments and balance
--   assets/images/profile.png — User profile and settings
--   assets/images/signup.png — Signup / register screen
--   assets/images/signin.png — Sign-in / authentication screen
--   assets/images/add_product.png — Add product (admin) screen with photo slots
--   assets/images/product_list.png — Product list / search and quick add
+<img src="assets/images/orders.png" width="100" height=200 />
+ — Orders order list and details
+
+<img src="assets/images/profile.png" width="100" height="200" />
+— User profile and settings
+
+<img src="assets/images/signup.png" width="100" height="200" />
+— Signup / register screen
+
+<img src="assets/images/signin.png" width="100" height="200" />
+— Sign-in / authentication screen
+
+<img src="assets/images/add_product.png" width="100" height="200" />
+— Add product (admin) screen with photo slots
+
+<img src="assets/images/product_list.png" width="100" height="200" />
+— Product list / search and quick add
+
+<img src="assets/images/wallet.png" width="100" height="200" />
+— Wallet / payments and balance
 
 Usage notes:
 
